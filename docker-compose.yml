@@ -1,0 +1,43 @@
+################################################################################
+# Execute with "docker compose run --rm --build yt-dlp --batch-file /downloads/urls.txt"
+# to run against the URLs in the batch-file. Note that the file reference passed
+# as "batch-file" is relative to the location in the container, not the path to
+# the file on the source machine and needs to be named "urls.txt".
+#
+# Or "docker compose run --rm --build yt-dlp [URL]"
+# to run it against the single URL
+#
+# To build the image, execute "docker compose -f docker-compose.yml build yt-dlp"
+#
+# Notice that the "yt-dlp" bit is the service named "yt-dlp" in this compose file
+################################################################################
+services:
+  yt-dlp:
+    # Build the image using the local Dockerfile (which includes Deno)
+    image: my-local/yt-dlp-audio-video:latest
+    build: .
+    container_name: yt-dlp-downloader
+    
+    user: "502:20"
+
+    volumes:
+      # Final destination for your music videos (Plex folder)
+      - ./${LOCAL_STORAGE_DIR:-local_downloads}:/downloads
+      
+      # The configuration file we built for your AV1/1080p 'happy path'
+      - ./${PROCESSOR_CONFIG_FILE:-yt-dlp.conf}:/etc/yt-dlp.conf
+      
+      # The batch file containing your YouTube links
+      # Note that this isn't automatically picked up by yt-dlp; you have to
+      # reference the file in the run CLI. This just makes the file
+      # available in the container.
+      - ./urls.txt:/downloads/urls.txt
+
+    # Creates a 2GB RAM disk for fast fragment merging during downloads
+    tmpfs:
+      - /tmp:rw,size=4G,mode=1777
+      
+    # Security: Prevents the container from running with unnecessary privileges
+    security_opt:
+      - no-new-privileges:true
+
