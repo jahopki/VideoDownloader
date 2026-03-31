@@ -26,9 +26,9 @@ RUN addgroup --gid 1000 ytgroup && \
     adduser --disabled-password --uid 1000 -gid 1000 ytuser 
 
 #7. create directories to be used by ytdlp and give it ownership
-RUN mkdir -p /downloads && \
-    chmod 777 /downloads && \
-    chown -R ytuser:ytgroup /downloads && \
+RUN mkdir -p /workspace && \
+    chmod 777 /workspace && \
+    chown -R ytuser:ytgroup /workspace && \
     mkdir -p /ytdlp_cache && \
     chmod 777 /ytdlp_cache && \
     chown -R ytuser:ytgroup /ytdlp_cache
@@ -36,7 +36,7 @@ RUN mkdir -p /downloads && \
 USER ytuser
 
 # 8. Setup workspace
-WORKDIR /downloads
+WORKDIR /workspace
 
 # 9. Define the execution point
 ENTRYPOINT ["yt-dlp"]

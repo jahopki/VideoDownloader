@@ -1,4 +1,17 @@
 .DS_Store
 .*sw*
+downloads/
+local_downloads/
 downloaded_content/
 urls.txt
+
+# Ignore downloaded video/audio files
+*.mp4
+*.mkv
+*.webm
+*.m4a
+*.opus
+*.mp3
+
+# Ignore yt-dlp archive file if enabled
+archive.txt
