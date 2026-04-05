@@ -1,4 +1,4 @@
-# YTDown - Dockerized yt-dlp for High-Quality Video Downloads
+# VideoDownloader - Dockerized yt-dlp for High-Quality Video Downloads
 
 > A production-ready Docker container for downloading videos with yt-dlp, optimized for 4K HEVC content with Plex/Apple TV compatibility.
 
@@ -23,7 +23,7 @@
 
 ```bash
 git clone <your-repo-url>
-cd YTDown
+cd VideoDownloader
 ```
 
 ### 2. Build the Image
@@ -48,7 +48,7 @@ docker compose run --rm yt-dlp --batch-file urls.txt
 
 Downloads appear in the project directory, organized like:
 ```
-YTDown/
+VideoDownloader/
 ├── Artist Name/
 │   └── Song Title - video.mp4
 └── Another Artist/
@@ -59,7 +59,7 @@ YTDown/
 
 ### URLs File (`urls.txt`)
 
-Add one YouTube URL per line:
+Add one video URL per line:
 ```
 https://youtu.be/VIDEO_ID_1
 https://youtu.be/VIDEO_ID_2
@@ -149,7 +149,7 @@ docker compose build --no-cache yt-dlp
 ## 📂 Project Structure
 
 ```
-YTDown/
+VideoDownloader/
 ├── .dockerignore       # Optimizes build context
 ├── .gitignore          # Excludes videos from git
 ├── Dockerfile          # Multi-stage image definition
